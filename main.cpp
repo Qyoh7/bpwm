@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 using namespace std;
+using json = nlohmann::json;
 
 struct login
 {
@@ -16,21 +17,38 @@ struct login
 void saveLogins(vector<login> logins)
 {
     fstream loginFile("logins.json");
-    string loginFileString;
-    while (getline(loginFile, loginFileString)) {}
-    cout << loginFileString << endl;
+    json j;
 
-    nlohmann::json j = loginFileString;
-    for (login login : logins)
+    if (loginFile.is_open())
     {
-        j += {
+        try 
+        {
+            loginFile >> j;
+        } 
+        catch (...) 
+        {
+            j = json::array();
+        }
+        loginFile.close();
+    }
+    else 
+    {
+        j = json::array();
+    }
+
+    cout << j << endl;
+
+    for (const auto &login : logins)
+    {
+        j.push_back({
                 login.name, {
                     {"username", login.username},
                     {"password", login.password},
                     {"website", login.website},
                 }
-        };
+        });
     }
+    loginFile << j << endl;
     cout << setw(4) << j << endl;
 }
 
@@ -39,6 +57,10 @@ int main()
     vector<login> logins;
     login test = {"bank", "testUserName", "testPassword", "bank.org"};
     logins.push_back(test);
+    login test2 = {"bank", "testUserName", "testPassword", "bank.org"};
+    logins.push_back(test2);
+    login test3 = {"bank", "testUserName", "testPassword", "bank.org"};
+    logins.push_back(test3);
     saveLogins(logins);
 
     // while (true)
