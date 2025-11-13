@@ -1,0 +1,20 @@
+[
+    {
+        "name": "bank",
+        "password": "testPassword",
+        "username": "testUserName",
+        "website": "bank.org"
+    },
+    {
+        "name": "bank",
+        "password": "testPassword",
+        "username": "testUserName",
+        "website": "bank.org"
+    },
+    {
+        "name": "bank",
+        "password": "testPassword",
+        "username": "testUserName",
+        "website": "bank.org"
+    }
+]

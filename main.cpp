@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <string>
@@ -34,24 +35,24 @@ vector<login> readLogins()
 
 void saveLogins(vector<login> logins)
 {
-    fstream loginFile("logins.json");
+    ifstream inFile("logins.json");
     json j;
 
-    if (loginFile.is_open())
+    if (inFile.is_open())
     {
         try 
         {
-            loginFile >> j;
+            inFile >> j;
         } 
         catch (...) 
         {
             j = json::array();
         }
-        loginFile.close();
     }
     else 
     {
-        j = json::array();
+        cerr << "Failed to open file" << endl;
+        exit(EXIT_FAILURE);
     }
 
     cout << j << endl;
@@ -59,15 +60,16 @@ void saveLogins(vector<login> logins)
     for (const auto &login : logins)
     {
         j.push_back({
-                login.name, {
+                    {"name", login.name},
                     {"username", login.username},
                     {"password", login.password},
                     {"website", login.website},
-                }
         });
     }
-    loginFile << j << endl;
+    ofstream outFile("logins.json", ios::trunc);
+    outFile << setw(4) << j;
     cout << setw(4) << j << endl;
+    outFile.close();
 }
 
 int main()
