@@ -14,6 +14,24 @@ struct login
     string website;
 };
 
+vector<login> readLogins()
+{
+    fstream loginFile("logins.json");
+    json j = json::parse(loginFile);
+    login tmp = {};
+    vector<login> logins;
+
+    for (const auto& item : j.items())
+    {
+        tmp.name = item.value();
+        tmp.username = item.value()["username"].get<string>();
+        tmp.password = item.value()["password"].get<string>();
+        tmp.website = item.value()["website"].get<string>();
+        logins.push_back(tmp);
+    }
+    return logins;
+}
+
 void saveLogins(vector<login> logins)
 {
     fstream loginFile("logins.json");
