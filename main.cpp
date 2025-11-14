@@ -2,10 +2,11 @@
 using namespace std;
 using json = nlohmann::json;
 
-
 int main()
 {
     vector<login> logins;
+
+
     login test = {"bank", "testUserName", "testPassword", "bank.org"};
     logins.push_back(test);
     login test2 = {"bank", "testUserName", "testPassword", "bank.org"};
@@ -13,6 +14,11 @@ int main()
     login test3 = {"bank", "testUserName", "testPassword", "bank.org"};
     logins.push_back(test3);
     saveLogins(logins);
+
+    for (auto &login : readLogins())
+    {
+        cout << login.name << endl;
+    }
 
     // while (true)
     // {
