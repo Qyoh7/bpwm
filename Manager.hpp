@@ -11,7 +11,8 @@ using json = nlohmann::json;
 class Manager
 {
 
-    private:
+
+    public:
         struct Login
         {
             string name;
@@ -19,11 +20,7 @@ class Manager
             string password;
             string website;
         };
-
-        std::vector<Login> m_logins;
-
-    public:
-        manager()
+        Manager()
         {
             m_logins = readLogins();
         }
@@ -54,9 +51,9 @@ class Manager
                 tmp.username = item.value()["username"].get<string>();
                 tmp.password = item.value()["password"].get<string>();
                 tmp.website = item.value()["website"].get<string>();
-                Logins.push_back(tmp);
+                logins.push_back(tmp);
             }
-            return Logins;
+            return logins;
         }
 
         void saveLogins(std::vector<Login> logins)
@@ -90,6 +87,8 @@ class Manager
         {
             m_logins.push_back(newLogin);
         }
+    private:
+        std::vector<Login> m_logins;
 
         
 };

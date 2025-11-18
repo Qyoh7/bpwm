@@ -4,8 +4,8 @@ using json = nlohmann::json;
 
 int main()
 {
-    vector<login> logins;
-
+    Manager manager;
+    manager.addLogin(const Login &newLogin)
 
     login test = {"bank", "testUserName", "testPassword", "bank.org"};
     logins.push_back(test);
